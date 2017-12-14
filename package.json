@@ -1,0 +1,29 @@
+{
+  "name": "bumplebee",
+  "version": "2.1.6",
+  "description": "Bump your package.json, npm-shrinkwrap, sonar-project.properties versions.",
+  "author": "Dara Hayes",
+  "main": "index.js",
+  "bin": {
+    "bump": "./index.js"
+  },
+  "scripts": {
+    "test": "standard && mocha test/test.js",
+    "lint": "standard",
+    "lint-fix": "standard --fix"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1",
+    "pre-commit": "^1.2.2",
+    "standard": "^10.0.3",
+    "tape": "^4.8.0"
+  },
+  "pre-commit": [
+    "test"
+  ],
+  "license": "MIT"
+}
