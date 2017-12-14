@@ -4,7 +4,7 @@ var fs = require('fs')
 var path = require('path')
 var spawn = require('child_process').spawn
 var assert = require('assert')
-var os = require('os')
+var tmp = require('tmp')
 
 var bumplebee = path.resolve(__dirname, '../index.js')
 
@@ -16,7 +16,9 @@ var sonarFile = fs.readFileSync(path.resolve(__dirname, 'fixtures/sonar-project.
 describe('Testing Major, Minor and Patch Bumps', function () {
   it('it should do a patch version bump by default', function (done) {
     var newVersion = '1.0.1'
-    var testDir = fs.mkdtempSync(os.tmpdir())
+    var testDir = tmp.dirSync({template: '/tmp/tmp-XXXXXX'}).name
+
+    console.log(testDir)
 
     var {packageFile, shrinkwrapFile, sonarFile} = getFiles(testDir)
     writeFiles([packageFile, shrinkwrapFile, sonarFile])
@@ -33,7 +35,7 @@ describe('Testing Major, Minor and Patch Bumps', function () {
 
   it('it should do patch version bump', function (done) {
     var newVersion = '1.0.1'
-    var testDir = fs.mkdtempSync(os.tmpdir())
+    var testDir = tmp.dirSync({template: '/tmp/tmp-XXXXXX'}).name
 
     var {packageFile, shrinkwrapFile, sonarFile} = getFiles(testDir)
     writeFiles([packageFile, shrinkwrapFile, sonarFile])
@@ -50,7 +52,7 @@ describe('Testing Major, Minor and Patch Bumps', function () {
 
   it('it should do major version bump', function (done) {
     var newVersion = '2.0.0'
-    var testDir = fs.mkdtempSync(os.tmpdir())
+    var testDir = tmp.dirSync({template: '/tmp/tmp-XXXXXX'}).name
 
     var {packageFile, shrinkwrapFile, sonarFile} = getFiles(testDir)
     writeFiles([packageFile, shrinkwrapFile, sonarFile])
@@ -67,7 +69,7 @@ describe('Testing Major, Minor and Patch Bumps', function () {
 
   it('it should do minor version bump', function (done) {
     var newVersion = '1.1.0'
-    var testDir = fs.mkdtempSync(os.tmpdir())
+    var testDir = tmp.dirSync({template: '/tmp/tmp-XXXXXX'}).name
 
     var {packageFile, shrinkwrapFile, sonarFile} = getFiles(testDir)
     writeFiles([packageFile, shrinkwrapFile, sonarFile])
@@ -84,7 +86,7 @@ describe('Testing Major, Minor and Patch Bumps', function () {
 
   it('it should work even without a sonar-project.properties file', function (done) {
     var newVersion = '1.0.1'
-    var testDir = fs.mkdtempSync(os.tmpdir())
+    var testDir = tmp.dirSync({template: '/tmp/tmp-XXXXXX'}).name
 
     var {packageFile, shrinkwrapFile} = getFiles(testDir)
     writeFiles([packageFile, shrinkwrapFile])
@@ -100,7 +102,7 @@ describe('Testing Major, Minor and Patch Bumps', function () {
 
   it('it should work even without a npm-shrinkwrap.json file', function (done) {
     var newVersion = '1.0.1'
-    var testDir = fs.mkdtempSync(os.tmpdir())
+    var testDir = tmp.dirSync({template: '/tmp/tmp-XXXXXX'}).name
 
     var {packageFile, sonarFile} = getFiles(testDir)
     writeFiles([packageFile, sonarFile])
@@ -116,7 +118,7 @@ describe('Testing Major, Minor and Patch Bumps', function () {
 
   it('it should work even with only a package.json file', function (done) {
     var newVersion = '1.0.1'
-    var testDir = fs.mkdtempSync(os.tmpdir())
+    var testDir = tmp.dirSync({template: '/tmp/tmp-XXXXXX'}).name
 
     var {packageFile} = getFiles(testDir)
     writeFiles([packageFile])
