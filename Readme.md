@@ -1,5 +1,8 @@
 # Bumplebee
 
+[![CircleCI](https://circleci.com/gh/darahayes/bumplebee.svg?style=svg)](https://circleci.com/gh/darahayes/bumplebee)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 This is a small CLI designed to make it easy to bump versions in `package.json`, `npm-shrinkwrap.json` and `sonar-project.properties`.
 
 ## Install
