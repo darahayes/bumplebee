@@ -4,4 +4,4 @@ machine:
 
 test:
   override:
-    - sudo node_modules/.bin/mocha test/test.js
+    - npm test
