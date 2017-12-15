@@ -44,7 +44,7 @@ done: sonar-project.properties
 done: npm-shrinkwrap.json
 ```
 
-`bump` defaults to `minor` if no argument is passed:
+`bump` defaults to `patch` if no argument is passed:
 
 ```
 $ bump
