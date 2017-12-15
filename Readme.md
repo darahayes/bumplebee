@@ -54,6 +54,16 @@ done: sonar-project.properties
 done: npm-shrinkwrap.json
 ```
 
+`bump` also supports the `x.y.z-BUILD-NUMBER` syntax.
+
+```
+$ bump
+Bumping from version 0.2.0-BUILD-NUMBER to version 0.2.1-BUILD-NUMBER
+done: package.json
+done: sonar-project.properties
+done: npm-shrinkwrap.json
+```
+
 `bump` still works if `npm-shrinkwrap.json` or `sonar-project.properties` are not present
 
 ```
