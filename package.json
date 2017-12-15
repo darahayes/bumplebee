@@ -1,6 +1,6 @@
 {
   "name": "bumplebee",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bump your package.json, npm-shrinkwrap, sonar-project.properties versions in the terminal.",
   "author": "Dara Hayes",
   "repository": "https://github.com/darahayes/bumplebee",
