@@ -9,16 +9,25 @@ var tmp = require('tmp')
 var bumplebee = path.resolve(__dirname, '../index.js')
 
 // Load in the fixture files
-var packageFile = require(path.resolve(__dirname, 'fixtures/package.json'))
-var shrinkwrapFile = require(path.resolve(__dirname, 'fixtures/npm-shrinkwrap.json'))
-var sonarFile = fs.readFileSync(path.resolve(__dirname, 'fixtures/sonar-project.properties'), 'utf8')
+var fixtures = {
+  packageFile: {
+    normal: require(path.resolve(__dirname, 'fixtures/package.json')),
+    custom: require(path.resolve(__dirname, 'fixtures/package-custom.json'))
+  },
+  shrinkwrapFile: {
+    normal: require(path.resolve(__dirname, 'fixtures/npm-shrinkwrap.json')),
+    custom: require(path.resolve(__dirname, 'fixtures/npm-shrinkwrap-custom.json'))
+  },
+  sonarFile: {
+    normal: fs.readFileSync(path.resolve(__dirname, 'fixtures/sonar-project.properties'), 'utf8'),
+    custom: fs.readFileSync(path.resolve(__dirname, 'fixtures/sonar-project-custom.properties'), 'utf8')
+  }
+}
 
 describe('Testing Major, Minor and Patch Bumps', function () {
   it('it should do a patch version bump by default', function (done) {
     var newVersion = '1.0.1'
     var testDir = tmp.dirSync({template: '/tmp/tmp-XXXXXX'}).name
-
-    console.log(testDir)
 
     var {packageFile, shrinkwrapFile, sonarFile} = getFiles(testDir)
     writeFiles([packageFile, shrinkwrapFile, sonarFile])
@@ -130,6 +139,23 @@ describe('Testing Major, Minor and Patch Bumps', function () {
       done()
     })
   })
+
+  it('it should work with the x.y.z-BUILD-NUMBER syntax', function (done) {
+    var newVersion = '1.0.1-BUILD-NUMBER'
+    var testDir = tmp.dirSync({template: '/tmp/tmp-XXXXXX'}).name
+
+    var {packageFile, shrinkwrapFile, sonarFile} = getFiles(testDir, 'custom')
+    writeFiles([packageFile, shrinkwrapFile, sonarFile])
+
+    var child = spawn('node', [bumplebee], {cwd: testDir})
+    child.on('close', function (code) {
+      assert.equal(code, 0)
+      assert.equal(require(packageFile.path).version, newVersion)
+      assert.equal(require(shrinkwrapFile.path).version, newVersion)
+      assert.ok(fs.readFileSync(sonarFile.path, 'utf8').includes(`sonar.projectVersion=${newVersion}`))
+      done()
+    })
+  })
 })
 
 function writeFiles (files) {
@@ -138,18 +164,19 @@ function writeFiles (files) {
   })
 }
 
-function getFiles (dir) {
+function getFiles (dir, type) {
+  type = type || 'normal'
   return {
     packageFile: {
-      data: JSON.stringify(packageFile, null, 2),
+      data: JSON.stringify(fixtures.packageFile[type], null, 2),
       path: path.resolve(dir, 'package.json')
     },
     shrinkwrapFile: {
-      data: JSON.stringify(shrinkwrapFile, null, 2),
+      data: JSON.stringify(fixtures.shrinkwrapFile[type], null, 2),
       path: path.resolve(dir, 'npm-shrinkwrap.json')
     },
     sonarFile: {
-      data: sonarFile,
+      data: fixtures.sonarFile[type],
       path: path.resolve(dir, 'sonar-project.properties')
     }
   }
