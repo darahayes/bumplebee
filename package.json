@@ -1,7 +1,7 @@
 {
   "name": "bumplebee",
   "version": "1.0.0",
-  "description": "Bump your package.json, npm-shrinkwrap, sonar-project.properties versions.",
+  "description": "Bump your package.json, npm-shrinkwrap, sonar-project.properties versions in the terminal.",
   "author": "Dara Hayes",
   "repository": "https://github.com/darahayes/bumplebee",
   "main": "index.js",
@@ -21,7 +21,6 @@
     "mocha": "^4.0.1",
     "pre-commit": "^1.2.2",
     "standard": "^10.0.3",
-    "tape": "^4.8.0",
     "tmp": "0.0.33"
   },
   "pre-commit": [
